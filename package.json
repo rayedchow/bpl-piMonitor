@@ -7,19 +7,6 @@
         "start": "electron .",
         "install": "electron-rebuild"
     },
-    "repository": {
-        "type": "git",
-        "url": "git@github.com:serialport/electron-serialport.git"
-    },
-    "keywords": [
-        "Electron",
-        "quick",
-        "start",
-        "tutorial",
-        "demo"
-    ],
-    "author": "GitHub",
-    "license": "CC0-1.0",
     "devDependencies": {
         "electron": "^13.1.6",
         "electron-rebuild": "^2.3.5"
