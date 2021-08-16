@@ -2,31 +2,20 @@
 // be executed in the renderer process for that window.
 // All of the Node.js APIs are available in this process.
 
-const serialport = require('serialport')
-const tableify = require('tableify')
+const serialport = require('serialport');
+const port = new serialport('/dev/cu.usbmodem14201', { baudRate: 9600 });
 
-async function listSerialPorts() {
-  await serialport.list().then((ports, err) => {
-    if(err) {
-      document.getElementById('error').textContent = err.message
-      return
-    } else {
-      document.getElementById('error').textContent = ''
-    }
-    console.log('ports', ports);
+port.on('open', () => {
+	console.log('pog the communication gateway between pi->arduino is now open.');
+});
 
-    if (ports.length === 0) {
-      document.getElementById('error').textContent = 'No ports discovered'
-    }
+port.on('data', data => {
+	console.log('pog new data from the other side of the coms gateway: ' + data);
+});
 
-    tableHTML = tableify(ports)
-    document.getElementById('ports').innerHTML = tableHTML
-  })
-}
+const servo = () => {
+	console.log('hi');
+	port.write('servo-run');
+};
 
-// Set a timeout that will check for new serialPorts every 2 seconds.
-// This timeout reschedules itself.
-setTimeout(function listPorts() {
-  listSerialPorts();
-  setTimeout(listPorts, 2000);
-}, 2000);
+document.getElementById('controller').onclick = servo;
